@@ -30,3 +30,58 @@ Track.find_by(name: 'My Time After Awhile').media_type
 ```
 Track.find_by(name: 'My Time After Awhile').album
 ```
+
+## Part 4
+1. Add a through association to Chinook that will allow you to make the following query: `ruby Artist.last.tracks` Test it out in the Rails console to make sure it worked.
+```
+class Artist < ApplicationRecord
+  has_many :albums
+
+  has_many :tracks, through: :albums
+end
+```
+2. Add a through association to Chinook that will allow you to make the following query: `ruby Playlist.last.genres` Test it out in the Rails console to make sure it worked.
+```
+class Playlist < ApplicationRecord
+  has_and_belongs_to_many :tracks
+
+  has_many :genres, through: :tracks
+end
+```
+3. Add a through association to Chinook that will allow you to make the following query: `ruby Album.last.playlists` Test it out in the Rails console to make sure it worked.
+```
+class Album < ApplicationRecord
+  belongs_to :artist
+  has_many :tracks
+
+  has_many :playlists, through: :tracks
+end
+```
+4. Add a through association to Chinook that will allow you to make the following query: `ruby Playlist.last.media_types` Test it out in the Rails console to make sure it worked.
+```
+class Playlist < ApplicationRecord
+  has_and_belongs_to_many :tracks
+
+  has_many :genres, through: :tracks
+
+  has_many :media_types, through: :tracks
+end
+```
+5. Add a through association to Chinook that will allow you to make the following query: `ruby Artist.last.media_types` Test it out in the Rails console to make sure it worked.
+```
+class Artist < ApplicationRecord
+  has_many :albums
+
+  has_many :tracks, through: :albums
+
+  has_many :media_types, through: :tracks
+end
+```
+6. Add a through association to Chinook that will allow you to make the following query: `ruby MediaType.last.genres` Test it out in the Rails console to make sure it worked.
+```
+class MediaType < ApplicationRecord
+  has_many :tracks
+
+  has_many :genres, through: :tracks
+end
+```
